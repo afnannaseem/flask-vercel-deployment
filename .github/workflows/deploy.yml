@@ -23,9 +23,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Install Vercel CLI using npm
+      run: |
+        npm install -g vercel
+
     - name: Deploy to Vercel
       env:
         VERCEL_TOKEN: ${{ secrets.SECRET }}  # Set your Vercel token in GitHub Secrets
       run: |
-        curl -sL https://github.com/vercel/vercel/releases/download/v21.0.0/vercel-linux-x64.tar.gz | tar xz
-        ./vercel --token $SECRET --prod
+        vercel --token $SECRET --prod
