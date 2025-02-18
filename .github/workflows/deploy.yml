@@ -3,7 +3,7 @@ name: Deploy Flask App to Vercel
 on:
   push:
     branches:
-      - main  # You can change this to match your default branch name
+      - main
 
 jobs:
   deploy:
@@ -27,8 +27,12 @@ jobs:
       run: |
         npm install -g vercel
 
+    - name: Check if SECRET is set
+      run: |
+        if [ -z "${{ secrets.SECRET }}" ]; then echo "SECRET is not set"; else echo "SECRET is set"; fi
+
     - name: Deploy to Vercel
       env:
-        VERCEL_TOKEN: ${{ secrets.SECRET }}  # Set your Vercel token in GitHub Secrets
+        VERCEL_TOKEN: ${{ secrets.SECRET }}
       run: |
         vercel --token $SECRET --prod
